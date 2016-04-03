@@ -13,6 +13,12 @@ build_list = (base_list) ->
             console.log("Invalid structure. Needs to be an Array or Object (Dictionary)")
     return active_list
 
+showOutput = ->
+    $('#output').addClass('animate').css('opacity', 1.0)
+
+hideOutput = ->
+    $('#output').removeClass('animate').css('opacity', 0.0)
+
 generate = (active_list) ->
     heading_string = active_list['heading'][Math.floor(Math.random() * active_list['heading'].length)]
     generate_string = active_list['response'][Math.floor(Math.random() * active_list['response'].length)]
@@ -27,11 +33,14 @@ generate = (active_list) ->
     for word in key_words_list
         template_list = template_list.replace('@'+word, active_list[word][Math.floor(Math.random() * active_list[word].length)])
 
+    setTimeout(showOutput, 50)
     $('#output').html(
         '<p>' + heading_string + '</p>' +
         '<p>' + template_list + '</p>'
     )
     $('#generate').text(generate_string)
+    hideOutput()
+    return false
 
 data_list = build_list(data)
 generate(data_list)
